@@ -177,7 +177,7 @@ class CPU:
         print("JNE")
         if self.EFlag == 0:
             print("JNE true")
-            reg = self.memory[self.pc+1]
+            reg = self.ram_read(self.pc+1)
             self.pc = self.reg[reg]
         else:
             # continue
@@ -187,13 +187,13 @@ class CPU:
         print("JEQ")
         if self.EFlag == 1:
             print("JEQ True")
-            reg = self.memory[self.pc+1]
+            reg = self.ram_read(self.pc+1)
             # update pc direct to go to address we want
             self.pc = self.reg[reg]
-            #self.pc += 2
+
         else:
-            self.pc += 2
             # continue
+            self.pc += 2
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
