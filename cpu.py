@@ -14,6 +14,7 @@ OP9 = 0b10100111  # CMP 167
 OP10 = 0b01010100  # jmp 84
 OP11 = 0b01010110  # jne 86
 OP12 = 0b01010101  # JEQ 85
+OP13 = 0b10101000  # AND 168
 
 
 class CPU:
@@ -213,6 +214,23 @@ class CPU:
             # store the result in regA
             self.reg[self.ram_read(self.pc+1)] = mult_val
             # increment to next value in memory (after 1.opcode, 2. reg#, 3.value)
+            self.pc += (num_operannds + 1)
+
+        elif op == 168:  # AND
+            regA_val = self.reg[self.ram_read(self.pc+1)]
+            regB_val = self.reg[self.ram_read(self.pc+2)]
+            bin_regA = list(str(bin(regA_val).replace("0b", "")))
+            bin_regB = list(str(bin(regB_val).replace("0b", "")))
+            #print(f"a {bin_regA}, b{bin_regB}")
+            new_val = ""
+            for i in range(0, len(bin_regA)):
+                if bin_regA[i] == bin_regB[i] and bin_regA[i] != "0":
+                    new_val += "1"
+                else:
+                    new_val += "0"
+            int_new_val = new_val
+            #print(f"new {new_val}")
+            self.reg[self.ram_read(self.pc+1)] = int_new_val
             self.pc += (num_operannds + 1)
 
         elif op == 167:  # CMP
