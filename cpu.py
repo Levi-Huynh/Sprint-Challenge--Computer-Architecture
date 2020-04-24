@@ -171,7 +171,6 @@ class CPU:
         reg = self.ram_read(self.pc+1)
         # Set the PC to the address stored in the given register.
         self.pc = self.reg[reg]
-        #self.pc += 2
 
     def handle_op11(self):
         print("JNE")
@@ -216,16 +215,16 @@ class CPU:
             # increment to next value in memory (after 1.opcode, 2. reg#, 3.value)
             self.pc += (num_operannds + 1)
 
-        elif op == 167:
+        elif op == 167:  # CMP
             if self.reg[reg_a] == self.reg[reg_b]:
                 self.EFlag = 1
             if self.reg[reg_a] != self.reg[reg_b]:
                 self.EFlag = 0
             if self.reg[reg_a] < self.reg[reg_b]:
                 self.LFlag = 1
-                #self.GFlag = 0
+                self.GFlag = 0
             if self.reg[reg_a] > self.reg[reg_b]:
-                #self.LFlag = 0
+                self.LFlag = 0
                 self.GFlag = 1
             self.pc += 3
 
